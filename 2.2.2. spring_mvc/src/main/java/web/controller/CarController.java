@@ -4,6 +4,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
 
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestParam;
 import web.models.Car;
 
@@ -16,7 +17,8 @@ import java.util.stream.Collectors;
 public class CarController {
 
     @GetMapping(value = "/cars")
-    public String printListCars(@RequestParam(value = "count", required = false) Integer count, ModelMap model) {
+    public String printListCars(@RequestParam(value = "count", required = false) Integer count,
+                                ModelMap model) {
         List<Car> cars = new ArrayList<>();
 
         cars.add(new Car("model1", 112233, "a001bc"));
