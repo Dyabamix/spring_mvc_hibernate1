@@ -1,6 +1,5 @@
 package web.models;
 
-
 public class Car {
     private String model;
     private int series;
@@ -37,6 +36,5 @@ public class Car {
     public void setSerialnumber(String serialnumber) {
         this.serialnumber = serialnumber;
     }
-
 
 }
