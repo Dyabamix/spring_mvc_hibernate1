@@ -18,9 +18,8 @@ public class CarController {
                                 @Autowired List<Car> cars,
                                 ModelMap model){
 
-        if (count > 0 && count < 5) {
             cars = cars.stream().limit(count).toList();
-        }
+
 
         model.addAttribute("cars", cars);
         return "Cars";
