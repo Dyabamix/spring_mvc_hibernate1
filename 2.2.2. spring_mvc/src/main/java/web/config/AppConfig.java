@@ -8,6 +8,7 @@ import org.springframework.orm.jpa.JpaVendorAdapter;
 import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
 import org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
+import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 
 import javax.persistence.EntityManagerFactory;
 import javax.sql.DataSource;
@@ -16,6 +17,7 @@ import java.util.Properties;
 
 @Configuration
 @PropertySource("classpath:db.properties")
+@EnableWebMvc
 @EnableTransactionManagement
 @ComponentScan(value = "web")
 public class AppConfig {
@@ -61,8 +63,8 @@ public class AppConfig {
     @Bean
     public Properties getProperties(){
         Properties properties = new Properties();
-        properties.setProperty("hibernate.show_sql", "hibernate.show_sql");
-        properties.setProperty("hibernate.hbm2ddl.auto", "hibernate.hbm2ddl");
+        properties.put("hibernate.show_sql", env.getProperty("hibernate.show_sql"));
+        properties.put("hibernate.hbm2ddl.auto", env.getProperty("hibernate.hbm2ddl.auto"));
 
         return properties;
     }

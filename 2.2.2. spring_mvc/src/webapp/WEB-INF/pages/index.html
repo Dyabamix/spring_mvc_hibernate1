@@ -6,14 +6,25 @@
 </head>
 <body>
 <div>
-    <table>
-        <tr th:each="user: ${users}">
-            <td th:text="${user.getId()}"></td>
-            <td th:text="${user.getName()}"></td>
-            <td th:text="${user.getLastName()}"></td>
-            <td th:text="${user.getAge()}"></td>
-            <td th:text="${user.getEmail()}"></td>
-            <td><a href="#">Update user</a></td>
+    <table style="border-collapse: collapse; border: 1px solid black; margin: auto; text-align: center">
+        <caption align="top">Users</caption>
+        <tr style="background: #2f2f2f; color: aliceblue;">
+            <td>Id User</td>
+            <td>Name User</td>
+            <td>Last name User</td>
+            <td>age User</td>
+            <td>Email User</td>
+            <td>Update User</td>
+            <td>Delete User</td>
+        </tr>
+        <tr style="border: 1px solid black" th:each="user: ${users}">
+            <td style="border: 1px solid black;" th:text="${user.getId()}"></td>
+            <td style="border: 1px solid black;" th:text="${user.getName()}"></td>
+            <td style="border: 1px solid black;" th:text="${user.getLastName()}"></td>
+            <td style="border: 1px solid black;" th:text="${user.getAge()}"></td>
+            <td style="border: 1px solid black;" th:text="${user.getEmail()}"></td>
+            <td style="border: 1px solid black;"><a href="#">Update user</a></td>
+            <td style="border: 1px solid black;"><a href="#">Delete user</a></td>
         </tr>
     </table>
 </div>
