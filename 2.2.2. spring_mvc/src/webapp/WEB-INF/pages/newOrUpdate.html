@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <meta charset="UTF-8">
+    <title>New or update user</title>
+  </head>
+  <body>
+    <div>
+      <form style="margin: auto">
+          <label for="name" style="display: block">Name</label>
+          <input type="text" id="name" style="display: block">
+
+          <label for="LastName" style="display: block">Last name</label>
+          <input type="text" id="LastName" style="display: block">
+
+          <label for="age" style="display: block">Age</label>
+          <input type="number" id="age" style="display: block">
+
+          <label for="email" style="display: block">Email</label>
+          <input type="email" id="email" style="display: block">
+
+          <button type="submit" th:text="${button_name}" style="display: block"></button>
+      </form>
+    </div>
+  </body>
+</html>
