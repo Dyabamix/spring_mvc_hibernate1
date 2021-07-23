@@ -2,25 +2,22 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title></title>
+    <title>List of Users</title>
 </head>
     <body>
-        <div>
-            <a href="/form_User">
-                <h2>Create new user</h2>
-            </a>
-        </div>
+            <button type="submit" onclick="location.href='/form_User/?user_id=0'" style="position: fixed; left: 30px; top: 30px">Create new user</button>
+
         <div>
             <table style="border-collapse: collapse; border: 1px solid black; margin: auto; text-align: center">
                 <caption align="top">Users</caption>
-                <tr style="background: #2f2f2f; color: aliceblue;">
-                    <td>Id User</td>
-                    <td>Name User</td>
-                    <td>Last name User</td>
-                    <td>age User</td>
-                    <td>Email User</td>
-                    <td>Update User</td>
-                    <td>Delete User</td>
+                <tr>
+                    <td style="border: 1px solid black; padding: 3px 10px">Id User</td>
+                    <td style="border: 1px solid black; padding: 3px 10px">Name User</td>
+                    <td style="border: 1px solid black; padding: 3px 10px">Last name User</td>
+                    <td style="border: 1px solid black; padding: 3px 10px">age User</td>
+                    <td style="border: 1px solid black; padding: 3px 10px">Email User</td>
+                    <td style="border: 1px solid black; padding: 3px 10px">Update User</td>
+                    <td style="border: 1px solid black; padding: 3px 10px">Delete User</td>
                 </tr>
                 <tr style="border: 1px solid black" th:each="user: ${users}">
                     <td style="border: 1px solid black;" th:text="${user.getId()}"></td>
@@ -29,12 +26,15 @@
                     <td style="border: 1px solid black;" th:text="${user.getAge()}"></td>
                     <td style="border: 1px solid black;" th:text="${user.getEmail()}"></td>
                     <td style="border: 1px solid black;">
-                        <a href="/form_User/" th:href="@{/form_User/?user_id={user_id}(user_id=${user.getId()})}">
+                        <a th:href="@{/form_User/?user_id={id}(id=${user.getId()})}">
                             Update user
                         </a>
+
                     </td>
                     <td style="border: 1px solid black;">
-                        <a href="/" th:href="@{/?user_id={user_id}(user_id=${user.getId()})}">Delete user</a>
+                        <a th:href="@{/?user_id={id}(id=${user.getId()})}">
+                            Delete user
+                        </a>
                     </td>
                 </tr>
             </table>

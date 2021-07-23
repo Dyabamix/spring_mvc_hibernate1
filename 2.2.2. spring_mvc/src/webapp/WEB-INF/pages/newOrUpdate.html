@@ -6,18 +6,20 @@
   </head>
   <body>
     <div>
-      <form style="margin: auto">
+      <form style="margin: auto" method="post" action="/" th:object="${user}">
+          <input type="hidden" th:field="*{id}" th:value="*{getId()}">
+
           <label for="name" style="display: block">Name</label>
-          <input type="text" id="name" style="display: block">
+          <input type="text" id="name" style="display: block" th:field="*{name}" th:value="*{getName()}" required>
 
           <label for="LastName" style="display: block">Last name</label>
-          <input type="text" id="LastName" style="display: block">
+          <input type="text" id="LastName" style="display: block" th:field="*{lastName}" th:value="*{getLastName()}" required>
 
           <label for="age" style="display: block">Age</label>
-          <input type="number" id="age" style="display: block">
+          <input type="number" id="age" style="display: block" th:field="*{age}" th:value="*{getAge()}" required>
 
           <label for="email" style="display: block">Email</label>
-          <input type="email" id="email" style="display: block">
+          <input type="email" id="email" style="display: block" th:field="*{email}" th:value="*{getEmail()}" required>
 
           <button type="submit" th:text="${button_name}" style="display: block"></button>
       </form>

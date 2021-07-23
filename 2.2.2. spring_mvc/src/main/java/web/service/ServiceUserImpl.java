@@ -37,4 +37,9 @@ public class ServiceUserImpl implements ServiceUser{
     public List<User> getAllUsers() {
         return userDao.getAllUsers();
     }
+
+    @Override
+    public User getUser(int id){
+        return userDao.getUser(id);
+    }
 }
