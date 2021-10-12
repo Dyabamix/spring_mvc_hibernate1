@@ -5,7 +5,7 @@
     <title>List of Users</title>
 </head>
     <body>
-            <button type="submit" onclick="location.href='/form_User/?user_id=0'" style="position: fixed; left: 30px; top: 30px">Create new user</button>
+            <button type="submit" onclick="location.href='/create_or_update/?user_id=0'" style="position: fixed; left: 30px; top: 30px">Create new user</button>
 
         <div>
             <table style="border-collapse: collapse; border: 1px solid black; margin: auto; text-align: center">
@@ -34,7 +34,7 @@
                         </table>
                     </td>
                     <td style="border: 1px solid black;">
-                        <a th:href="@{/form_User/?user_id={id}(id=${user.getId()})}">
+                        <a th:href="@{/create_or_update/?user_id={id}(id=${user.getId()})}">
                             Update user
                         </a>
                     </td>

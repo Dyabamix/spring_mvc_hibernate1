@@ -2,6 +2,7 @@ package web.service;
 
 import org.springframework.stereotype.Service;
 import web.DAO.UserDao;
+import web.models.Role;
 import web.models.User;
 
 import javax.persistence.PersistenceContext;
@@ -41,5 +42,10 @@ public class ServiceUserImpl implements ServiceUser{
     @Override
     public User getUser(int id){
         return userDao.getUser(id);
+    }
+
+    @Override
+    public Role getRole(int role_id) {
+        return userDao.getRole(role_id);
     }
 }
