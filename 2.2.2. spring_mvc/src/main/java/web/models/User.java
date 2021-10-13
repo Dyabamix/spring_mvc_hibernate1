@@ -1,6 +1,7 @@
 package web.models;
 
 import javax.persistence.*;
+import java.util.Set;
 
 @Entity
 @Table(name = "users")
@@ -14,6 +15,13 @@ public class User {
     private String lastName;
     private int age;
     private String email;
+
+    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.MERGE)
+    @JoinTable(name = "user_roles",
+            joinColumns = @JoinColumn(name = "user_id"),
+            inverseJoinColumns = @JoinColumn(name = "roles_id"))
+
+    private Set<Role> roles;
 
     public User(){}
 
@@ -62,5 +70,27 @@ public class User {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public Set<Role> getRoles() {
+        return roles;
+    }
+
+    public void setRoles(Set<Role> roles) {
+        this.roles = roles;
+    }
+
+    public String getStringRoles() {
+        String stringRoles = null;
+        Set<Role> roles = getRoles();
+        StringBuilder sb = new StringBuilder();
+        for (Role role : roles){
+            if (role != null && sb.isEmpty()){
+                sb.append(role.getRole());
+            } else if (role != null){
+                sb.append("\n" + role.getRole());
+            }
+        }
+        return stringRoles = sb.toString();
     }
 }

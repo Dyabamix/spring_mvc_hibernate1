@@ -8,15 +8,20 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import web.models.Role;
 import web.models.User;
 import web.service.ServiceUser;
 
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
+import java.util.function.Consumer;
 
 @Controller
 public class UserController {
 
     private final ServiceUser serviceUser;
+    private String buttonName;
 
     public UserController(ServiceUser serviceUser) {
         this.serviceUser = serviceUser;
@@ -37,33 +42,79 @@ public class UserController {
         return "index";
     }
 
-    @GetMapping(value = "/form_User")
-    public String formUser(@RequestParam(value = "user_id", required = false) int id,
-                                     Model userModel,
-                                     Model buttonNameModel){
-        String buttonName;
-        User user = null;
-        if (id == 0){
-            buttonName = "Create";
-            user = new User();
-        } else {
-            buttonName = "Update";
+    @GetMapping(value = "/create_or_update")
+    public String createOrUpdateUser(@RequestParam("user_id") int id,
+                             Model model,
+                             Model b_model,
+                             Model action){
+        User user;
+        String nameAction;
+        String nameButton;
+        if (id != 0) {
             user = serviceUser.getUser(id);
+            nameAction = "/update";
+            nameButton = "Update";
+        } else {
+            user = new User();
+            nameAction = "/create";
+            nameButton = "Create";
         }
 
-        buttonNameModel.addAttribute("button_name", buttonName);
-        userModel.addAttribute("user", user);
+        model.addAttribute("user", user);
+        b_model.addAttribute("button_name", nameButton);
+        action.addAttribute("action", nameAction);
 
         return "newOrUpdate";
     }
 
-    @PostMapping
-    public String createOrUpdateUser(@ModelAttribute("user") User user){
-        if (user.getId() == 0){
-            serviceUser.add(user);
-        } else {
-            serviceUser.update(user);
-        }
+    @PostMapping(value = "/create")
+    public String create(@RequestParam("name") String name,
+                         @RequestParam("lastName") String lastName,
+                         @RequestParam("age") Integer age,
+                         @RequestParam("email") String email,
+                         @RequestParam("role") int role_id,
+                         Model model) {
+        User user = new User();
+        Set<Role> roles = new HashSet<>();
+        roles.add(serviceUser.getRole(role_id));
+        user.setName(name);
+        user.setLastName(lastName);
+        user.setAge(age);
+        user.setEmail(email);
+        user.setRoles(roles);
+
+        serviceUser.add(user);
+
+        model.addAttribute("user", user);
+
         return "redirect:/";
     }
+
+    @PostMapping(value = "/update")
+    public String update(@RequestParam("id") int user_id,
+                         @RequestParam("name") String name,
+                         @RequestParam("lastName") String lastName,
+                         @RequestParam("age") Integer age,
+                         @RequestParam("email") String email,
+                         @RequestParam("role") int role_id,
+                         Model model){
+        User user = serviceUser.getUser(user_id);
+        Set<Role> roles = user.getRoles();
+        roles.forEach(System.out::println);
+        if (!roles.contains(serviceUser.getRole(role_id))) {
+            roles.add(serviceUser.getRole(role_id));
+        }
+        user.setName(name);
+        user.setLastName(lastName);
+        user.setAge(age);
+        user.setEmail(email);
+        user.setRoles(roles);
+
+        serviceUser.update(user);
+
+        model.addAttribute("user", user);
+
+        return "redirect:/";
+    }
+
 }
