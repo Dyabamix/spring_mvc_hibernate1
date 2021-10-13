@@ -49,4 +49,10 @@ public class Role {
     public void setUser(Set<User> user) {
         this.user = user;
     }
+
+    @Override
+    public String toString() {
+        return "ID " + this.id
+                + "\nName role " + this.nameRole;
+    }
 }

@@ -15,6 +15,7 @@ import web.service.ServiceUser;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.function.Consumer;
 
 @Controller
 public class UserController {
@@ -42,7 +43,7 @@ public class UserController {
     }
 
     @GetMapping(value = "/create_or_update")
-    public String updateUser(@RequestParam("user_id") int id,
+    public String createOrUpdateUser(@RequestParam("user_id") int id,
                              Model model,
                              Model b_model,
                              Model action){
@@ -72,8 +73,7 @@ public class UserController {
                          @RequestParam("age") Integer age,
                          @RequestParam("email") String email,
                          @RequestParam("role") int role_id,
-                         Model model,
-                         Model textModel) {
+                         Model model) {
         User user = new User();
         Set<Role> roles = new HashSet<>();
         roles.add(serviceUser.getRole(role_id));
@@ -91,7 +91,29 @@ public class UserController {
     }
 
     @PostMapping(value = "/update")
-    public String update(){
+    public String update(@RequestParam("id") int user_id,
+                         @RequestParam("name") String name,
+                         @RequestParam("lastName") String lastName,
+                         @RequestParam("age") Integer age,
+                         @RequestParam("email") String email,
+                         @RequestParam("role") int role_id,
+                         Model model){
+        User user = serviceUser.getUser(user_id);
+        Set<Role> roles = user.getRoles();
+        roles.forEach(System.out::println);
+        if (!roles.contains(serviceUser.getRole(role_id))) {
+            roles.add(serviceUser.getRole(role_id));
+        }
+        user.setName(name);
+        user.setLastName(lastName);
+        user.setAge(age);
+        user.setEmail(email);
+        user.setRoles(roles);
+
+        serviceUser.update(user);
+
+        model.addAttribute("user", user);
+
         return "redirect:/";
     }
 
