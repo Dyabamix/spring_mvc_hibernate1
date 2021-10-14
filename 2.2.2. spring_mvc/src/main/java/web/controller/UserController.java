@@ -8,20 +8,15 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import web.models.Role;
 import web.models.User;
 import web.service.ServiceUser;
-
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
-import java.util.function.Consumer;
+
 
 @Controller
 public class UserController {
 
     private final ServiceUser serviceUser;
-    private String buttonName;
 
     public UserController(ServiceUser serviceUser) {
         this.serviceUser = serviceUser;
@@ -36,7 +31,6 @@ public class UserController {
         }
 
         List<User> users = serviceUser.getAllUsers();
-
         modelMap.addAttribute("users", users);
 
         return "index";
@@ -44,76 +38,43 @@ public class UserController {
 
     @GetMapping(value = "/create_or_update")
     public String createOrUpdateUser(@RequestParam("user_id") int id,
-                             Model model,
-                             Model b_model,
-                             Model action){
+                                     Model modelUser,
+                                     Model b_model,
+                                     Model action,
+                                     Model title) {
         User user;
         String nameAction;
         String nameButton;
+        String textTitle;
         if (id != 0) {
             user = serviceUser.getUser(id);
             nameAction = "/update";
             nameButton = "Update";
+            textTitle = "Update user";
         } else {
             user = new User();
             nameAction = "/create";
             nameButton = "Create";
+            textTitle = "Create new user";
         }
 
-        model.addAttribute("user", user);
+        modelUser.addAttribute("user", user);
         b_model.addAttribute("button_name", nameButton);
         action.addAttribute("action", nameAction);
+        title.addAttribute("title", textTitle);
 
         return "newOrUpdate";
     }
 
     @PostMapping(value = "/create")
-    public String create(@RequestParam("name") String name,
-                         @RequestParam("lastName") String lastName,
-                         @RequestParam("age") Integer age,
-                         @RequestParam("email") String email,
-                         @RequestParam("role") int role_id,
-                         Model model) {
-        User user = new User();
-        Set<Role> roles = new HashSet<>();
-        roles.add(serviceUser.getRole(role_id));
-        user.setName(name);
-        user.setLastName(lastName);
-        user.setAge(age);
-        user.setEmail(email);
-        user.setRoles(roles);
-
+    public String create(@ModelAttribute("user") User user) {
         serviceUser.add(user);
-
-        model.addAttribute("user", user);
-
         return "redirect:/";
     }
 
     @PostMapping(value = "/update")
-    public String update(@RequestParam("id") int user_id,
-                         @RequestParam("name") String name,
-                         @RequestParam("lastName") String lastName,
-                         @RequestParam("age") Integer age,
-                         @RequestParam("email") String email,
-                         @RequestParam("role") int role_id,
-                         Model model){
-        User user = serviceUser.getUser(user_id);
-        Set<Role> roles = user.getRoles();
-        roles.forEach(System.out::println);
-        if (!roles.contains(serviceUser.getRole(role_id))) {
-            roles.add(serviceUser.getRole(role_id));
-        }
-        user.setName(name);
-        user.setLastName(lastName);
-        user.setAge(age);
-        user.setEmail(email);
-        user.setRoles(roles);
-
+    public String update(@ModelAttribute("user") User user) {
         serviceUser.update(user);
-
-        model.addAttribute("user", user);
-
         return "redirect:/";
     }
 

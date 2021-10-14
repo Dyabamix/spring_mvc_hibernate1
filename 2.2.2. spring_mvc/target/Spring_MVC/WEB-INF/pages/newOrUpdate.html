@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <meta charset="UTF-8">
+    <title th:text="${title}"></title>
+  </head>
+  <body>
+    <div>
+      <form style="margin: auto" method="POST" th:action="${action}" th:object="${user}">
+          <input type="hidden" th:field="*{id}" th:value="*{getId()}">
+
+          <label for="name" style="display: block">Name</label>
+          <input type="text" id="name" style="display: block" th:field="*{name}" th:value="*{getName()}">
+
+          <label for="LastName" style="display: block">Last name</label>
+          <input type="text" id="LastName" style="display: block" th:field="*{lastName}" th:value="*{getLastName()}" required>
+
+          <label for="age" style="display: block">Age</label>
+          <input type="number" id="age" style="display: block" th:field="*{age}" th:value="*{getAge()}" required>
+
+          <label for="email" style="display: block">Email</label>
+          <input type="email" id="email" style="display: block" th:field="*{email}" th:value="*{getEmail()}" required>
+
+          <label for="roles" style="display: inline-block; margin: 18px 12px 0 0">Roles</label>
+          <select id="roles" style="display: inline-block; width: 125px">
+              <option th:value="${roleUser}">User</option>
+              <option th:value="${roleAdmin}">Admin</option>
+          </select>
+
+          <button type="submit" style="display: block; margin-top: 15px; width: 178px" th:text="${button_name}"></button>
+      </form>
+    </div>
+  </body>
+</html>

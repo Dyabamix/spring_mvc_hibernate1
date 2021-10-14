@@ -2,7 +2,6 @@ package web.models;
 
 
 import javax.persistence.*;
-import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -48,6 +47,24 @@ public class Role {
 
     public void setUser(Set<User> user) {
         this.user = user;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Role)) return false;
+
+        Role role = (Role) o;
+
+        if (id != role.id) return false;
+        return nameRole.equals(role.nameRole);
+    }
+
+    @Override
+    public int hashCode() {
+        int result = id;
+        result = 31 * result + nameRole.hashCode();
+        return result;
     }
 
     @Override

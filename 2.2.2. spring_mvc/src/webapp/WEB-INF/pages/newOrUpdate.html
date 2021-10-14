@@ -2,32 +2,32 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
   <head>
     <meta charset="UTF-8">
-    <title>New or update user</title>
+    <title th:text="${title}"></title>
   </head>
   <body>
     <div>
-      <form style="margin: auto" method="POST" th:action="${action}">
-          <input type="hidden" name="id" th:value="${user.getId()}">
+      <form style="margin: auto" method="POST" th:action="${action}" th:object="${user}">
+          <input type="hidden" th:field="*{id}" th:value="*{getId()}">
 
           <label for="name" style="display: block">Name</label>
-          <input type="text" id="name" name="name" style="display: block" th:value="${user.getName()}">
+          <input type="text" id="name" style="display: block" th:field="*{name}" th:value="*{getName()}">
 
           <label for="LastName" style="display: block">Last name</label>
-          <input type="text" id="LastName" name="lastName"  style="display: block" th:value="${user.getLastName()}" required>
+          <input type="text" id="LastName" style="display: block" th:field="*{lastName}" th:value="*{getLastName()}" required>
 
           <label for="age" style="display: block">Age</label>
-          <input type="number" id="age" name="age"  style="display: block" th:value="${user.getAge()}" required>
+          <input type="number" id="age" style="display: block" th:field="*{age}" th:value="*{getAge()}" required>
 
           <label for="email" style="display: block">Email</label>
-          <input type="email" id="email" name="email"  style="display: block" th:value="${user.getEmail()}" required>
+          <input type="email" id="email" style="display: block" th:field="*{email}" th:value="*{getEmail()}" required>
 
           <label for="roles" style="display: inline-block; margin: 18px 12px 0 0">Roles</label>
-          <select id="roles" name="role" style="display: inline-block; width: 125px">
-              <option value="3">User</option>
-              <option value="4">Admin</option>
+          <select id="roles" style="display: inline-block; width: 125px">
+              <option>User</option>
+              <option>Admin</option>
           </select>
 
-          <button type="submit" style="display: block; margin-top: 15px; width: 178px" th:text="${button_name}" th:action="${action}"></button>
+          <button type="submit" style="display: block; margin-top: 15px; width: 178px" th:text="${button_name}"></button>
       </form>
     </div>
   </body>
