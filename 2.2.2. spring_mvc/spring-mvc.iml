@@ -20,6 +20,7 @@
         <setting name="provider-name" value="Hibernate" />
         <datasource-mapping>
           <factory-entry name="getEntityManager" value="b8683dda-eaed-4675-aea8-6d29a6b2568e" />
+          <factory-entry name="spring-mvc" />
         </datasource-mapping>
         <naming-strategy-map />
       </configuration>

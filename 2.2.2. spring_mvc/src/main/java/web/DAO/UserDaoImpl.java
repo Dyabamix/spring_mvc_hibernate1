@@ -7,6 +7,7 @@ import web.models.User;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import java.util.List;
+import java.util.Set;
 
 @Repository
 public class UserDaoImpl implements UserDao {
@@ -49,5 +50,10 @@ public class UserDaoImpl implements UserDao {
     @Override
     public Role getRole(int role_id){
         return entityManager.find(Role.class, role_id);
+    }
+
+    @Override
+    public List<Role> getAllRoles() {
+        return  entityManager.createQuery("from Role", Role.class).getResultList();
     }
 }

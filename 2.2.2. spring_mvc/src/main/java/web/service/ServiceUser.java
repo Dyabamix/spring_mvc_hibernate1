@@ -12,4 +12,5 @@ public interface ServiceUser {
     List<User> getAllUsers();
     User getUser(int id);
     Role getRole(int role_id);
+    List<Role> getAllRoles();
 }

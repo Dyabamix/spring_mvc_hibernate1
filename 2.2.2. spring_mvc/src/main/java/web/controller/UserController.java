@@ -8,8 +8,11 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import web.models.Role;
 import web.models.User;
 import web.service.ServiceUser;
+
+import java.util.HashSet;
 import java.util.List;
 
 
@@ -41,7 +44,8 @@ public class UserController {
                                      Model modelUser,
                                      Model b_model,
                                      Model action,
-                                     Model title) {
+                                     Model title,
+                                     Model allRoles) {
         User user;
         String nameAction;
         String nameButton;
@@ -53,12 +57,15 @@ public class UserController {
             textTitle = "Update user";
         } else {
             user = new User();
+            user.setRoles(new HashSet<>());
             nameAction = "/create";
             nameButton = "Create";
             textTitle = "Create new user";
         }
 
         modelUser.addAttribute("user", user);
+        modelUser.addAttribute("roles", user.getRoles());
+        allRoles.addAttribute("allRoles", serviceUser.getAllRoles());
         b_model.addAttribute("button_name", nameButton);
         action.addAttribute("action", nameAction);
         title.addAttribute("title", textTitle);
@@ -68,12 +75,14 @@ public class UserController {
 
     @PostMapping(value = "/create")
     public String create(@ModelAttribute("user") User user) {
+
         serviceUser.add(user);
         return "redirect:/";
     }
 
     @PostMapping(value = "/update")
     public String update(@ModelAttribute("user") User user) {
+
         serviceUser.update(user);
         return "redirect:/";
     }
