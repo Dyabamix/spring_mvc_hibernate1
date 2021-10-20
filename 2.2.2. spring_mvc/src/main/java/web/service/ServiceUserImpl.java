@@ -48,4 +48,9 @@ public class ServiceUserImpl implements ServiceUser{
     public Role getRole(int role_id) {
         return userDao.getRole(role_id);
     }
+
+    @Override
+    public List<Role> getAllRoles() {
+        return userDao.getAllRoles();
+    }
 }
