@@ -8,12 +8,13 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import web.models.Role;
+
 import web.models.User;
 import web.service.ServiceUser;
 
 import java.util.HashSet;
 import java.util.List;
+
 
 
 @Controller
@@ -44,8 +45,7 @@ public class UserController {
                                      Model modelUser,
                                      Model b_model,
                                      Model action,
-                                     Model title,
-                                     Model allRoles) {
+                                     Model title) {
         User user;
         String nameAction;
         String nameButton;
@@ -64,8 +64,7 @@ public class UserController {
         }
 
         modelUser.addAttribute("user", user);
-        modelUser.addAttribute("roles", user.getRoles());
-        allRoles.addAttribute("allRoles", serviceUser.getAllRoles());
+        modelUser.addAttribute("allRoles", serviceUser.getAllRoles());
         b_model.addAttribute("button_name", nameButton);
         action.addAttribute("action", nameAction);
         title.addAttribute("title", textTitle);
@@ -76,13 +75,28 @@ public class UserController {
     @PostMapping(value = "/create")
     public String create(@ModelAttribute("user") User user) {
 
+        user.getRoles().forEach(role -> {
+            if (role.getUser() != null){
+                role.getUser().add(user);
+            } else {
+                role.setUser(new HashSet<>());
+                role.getUser().add(user);
+            }
+        });
         serviceUser.add(user);
         return "redirect:/";
     }
 
     @PostMapping(value = "/update")
     public String update(@ModelAttribute("user") User user) {
-
+        user.getRoles().forEach(role -> {
+            if (!role.getUser().isEmpty()){
+                role.getUser().add(user);
+            } else {
+                role.setUser(new HashSet<>());
+                role.getUser().add(user);
+            }
+        });
         serviceUser.update(user);
         return "redirect:/";
     }

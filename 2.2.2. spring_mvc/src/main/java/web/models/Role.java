@@ -15,7 +15,7 @@ public class Role {
     @Column(name = "role_name")
     private String nameRole;
 
-    @ManyToMany(mappedBy = "roles")
+    @ManyToMany(mappedBy = "roles", cascade = CascadeType.MERGE)
     private Set<User> user;
 
     public Role(String role) {
@@ -69,7 +69,6 @@ public class Role {
 
     @Override
     public String toString() {
-        return "ID " + this.id
-                + "\nName role " + this.nameRole;
+        return this.nameRole;
     }
 }

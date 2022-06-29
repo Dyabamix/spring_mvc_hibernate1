@@ -81,7 +81,6 @@ public class User {
     }
 
     public String getStringRoles() {
-        String stringRoles = null;
         Set<Role> roles = getRoles();
         StringBuilder sb = new StringBuilder();
         for (Role role : roles){
@@ -91,6 +90,6 @@ public class User {
                 sb.append("\n" + role.getRole());
             }
         }
-        return stringRoles = sb.toString();
+        return sb.toString();
     }
 }

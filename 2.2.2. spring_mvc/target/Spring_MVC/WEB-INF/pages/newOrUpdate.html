@@ -24,9 +24,10 @@
 
         <label for="roles" style="display: inline-block; margin: 18px 12px 0 0">Roles</label>
 
-        <div id="roles" th:each="role , stat : ${allRoles}">
-            <input type="checkbox" name="roles" th:value="${role}" th:checked="${#sets.contains(roles, role)}">
-            <label th:text="${role.getRole()}"></label>
+        <div id="roles" th:each="role : ${allRoles}">
+
+            <input type="checkbox"  th:for="${role.getId()}" th:field="*{roles}" th:value="${role.getId()}">
+            <label th:id="${role.getId()}" th:text="${role.getRole()}"></label>
         </div>
 
 
