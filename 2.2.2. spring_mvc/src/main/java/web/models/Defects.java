@@ -19,7 +19,6 @@ public class Defects {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "defect_id")
     public Long getId() {
         return id;
     }

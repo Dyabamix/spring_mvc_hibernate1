@@ -4,13 +4,15 @@ import javax.persistence.*;
 import java.util.Set;
 
 @Entity
-@Table
+@Table(name = "equiments")
 public class Equipment {
+    @Id
     private Long id;
     private String numberPosition;
     private String name;
     private boolean condition;
-    @OneToMany
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, targetEntity = Defects.class)
+    @JoinTable(name = "EQUIPMENT_DEFECT", joinColumns = { @JoinColumn(name = "EQUIPMENT_ID") }, inverseJoinColumns = { @JoinColumn(name = "DEFECT_ID") })
     private Set<Defects> defects;
     @ManyToOne
     private PlaceOfOperation placeOfOperation;
@@ -24,7 +26,7 @@ public class Equipment {
         this.id = id;
     }
 
-    @Id
+
     public Long getId() {
         return id;
     }

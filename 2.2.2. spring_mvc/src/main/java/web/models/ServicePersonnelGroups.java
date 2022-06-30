@@ -6,20 +6,24 @@ import java.util.Set;
 @Entity
 @Table
 public class ServicePersonnelGroups {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String name;
     @OneToMany
+    @JoinColumn
     private Set<Subgroups> subgroups;
     @OneToMany
+    @JoinColumn
     private Set<Equipment> equipments;
     @ManyToMany
+    @JoinColumn
     private Set<PlaceOfOperation> placesOfOperations;
 
     public void setId(Long id) {
         this.id = id;
     }
 
-    @Id
     public Long getId() {
         return id;
     }

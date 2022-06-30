@@ -6,9 +6,12 @@ import java.util.Set;
 @Entity
 @Table
 public class Subgroups {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String name;
     @OneToMany
+    @JoinColumn
     private Set<Equipment> equipments;
     @ManyToOne
     private ServicePersonnelGroups servicePersonnelGroup;
@@ -17,7 +20,7 @@ public class Subgroups {
         this.id = id;
     }
 
-    @Id
+
     public Long getId() {
         return id;
     }
