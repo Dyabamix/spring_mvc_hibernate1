@@ -4,7 +4,7 @@ import web.models.Role;
 import web.models.User;
 
 import java.util.List;
-import java.util.Set;
+
 
 public interface UserDao {
     void add(User user);
